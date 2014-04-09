@@ -16,7 +16,7 @@ public:
 	void STDMETHODCALLTYPE Hello() override;
 
 private:
-	ULONG m_refCount;
+	ULONG m_refCount=0;
 };
 
 #endif
