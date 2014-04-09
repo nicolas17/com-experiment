@@ -6,3 +6,4 @@ add_library(component MODULE
 	ihello.h
 	chellofactory.cpp chellofactory.h
 )
+add_executable(client client.cpp)
