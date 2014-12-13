@@ -1,7 +1,7 @@
 #ifndef COMEXPERIMENT_CHELLO_H
 #define COMEXPERIMENT_CHELLO_H
 
-#include "ihello.h"
+#include "hello.h"
 
 // {9957873A-4208-4AFE-ADD7-FC5BB781AFBC}
 DEFINE_GUID(CLSID_Hello,

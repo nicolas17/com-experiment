@@ -1,0 +1,6 @@
+import "unknwn.idl";
+
+[local,uuid(DA193271-5E58-41AC-9ECE-0865757DFAD4), dual]
+interface IHello : IUnknown {
+    void Hello();
+};
