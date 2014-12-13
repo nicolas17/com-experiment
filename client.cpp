@@ -7,6 +7,33 @@
 
 #include "chello.h"
 
+void greetByDispatch(IUnknown* hello) {
+    HRESULT hr;
+
+    IDispatch* dispatch;
+    hr = hello->QueryInterface(IID_IDispatch, (void**)&dispatch);
+    if (FAILED(hr)) {
+        wprintf(L"QueryInterface(IDispatch) failed: 0x%x\n", hr);
+        return;
+    }
+
+    OLECHAR* methodName = L"Hello";
+    DISPID methodId;
+    hr = dispatch->GetIDsOfNames(IID_NULL, &methodName, 1, 0, &methodId);
+    if (FAILED(hr)) {
+        wprintf(L"Error finding Hello method: 0x%x\n", hr);
+        return;
+    }
+
+    DISPPARAMS params = {nullptr, nullptr, 0, 0};
+    hr = dispatch->Invoke(methodId, IID_NULL, 0, DISPATCH_METHOD, &params, nullptr, nullptr, nullptr);
+    if (FAILED(hr)) {
+        wprintf(L"Error calling Hello method: 0x%x\n", hr);
+        return;
+    }
+    dispatch->Release();
+}
+
 int main()
 {
     HRESULT hr;
@@ -22,6 +49,9 @@ int main()
     }
 
     hello->Hello();
+
+    greetByDispatch(hello);
+
     hello->Release();
 
     CoUninitialize();
