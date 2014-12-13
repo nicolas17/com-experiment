@@ -38,6 +38,8 @@ public:
 private:
     ULONG m_refCount=0;
     ITypeInfo* m_typeInfo = nullptr;
+
+    HRESULT loadTypeInfo();
 };
 
 #endif

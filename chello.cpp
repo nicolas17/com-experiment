@@ -35,15 +35,44 @@ ULONG CHello::Release()
     return newRefCount;
 }
 
+HRESULT CHello::loadTypeInfo() {
+    HRESULT hr;
+
+    ITypeLib* typelib;
+    hr = LoadTypeLib(L"hello.tlb", &typelib);
+    if (FAILED(hr)) {
+        wprintf(L"Can't load typelib: 0x%x", hr);
+        return hr;
+    }
+
+    hr = typelib->GetTypeInfoOfGuid(IID_IHello, &m_typeInfo);
+    if (FAILED(hr)) {
+        wprintf(L"Can't get typeinfo: 0x%x", hr);
+        return hr;
+    }
+    //m_typeInfo->AddRef(); // is this needed?
+    typelib->Release();
+    return S_OK;
+}
+
 HRESULT CHello::GetTypeInfoCount(UINT* infoCount) {
     *infoCount = 1;
     return S_OK;
 }
 HRESULT CHello::GetTypeInfo(UINT id, LCID lcid, ITypeInfo** typeInfo) {
+    HRESULT hr;
+
     if (id != 0) {
         return DISP_E_BADINDEX;
     }
-    return E_NOTIMPL;
+
+    if (!m_typeInfo) {
+        hr = this->loadTypeInfo();
+        if (FAILED(hr)) return hr;
+    }
+    m_typeInfo->AddRef();
+    *typeInfo = m_typeInfo;
+    return S_OK;
 }
 HRESULT CHello::GetIDsOfNames(
     REFIID riid,
@@ -52,7 +81,10 @@ HRESULT CHello::GetIDsOfNames(
     LCID lcid,
     DISPID* dispid
 ) {
-    return E_NOTIMPL;
+    if (!m_typeInfo) {
+        loadTypeInfo(); // TODO error checking
+    }
+    return DispGetIDsOfNames(m_typeInfo, names, nameCount, dispid);
 }
 HRESULT CHello::Invoke(
     DISPID member,
@@ -64,7 +96,7 @@ HRESULT CHello::Invoke(
     EXCEPINFO* excepInfo,
     UINT* argErr
 ) {
-    return E_NOTIMPL;
+    return DispInvoke(this, m_typeInfo, member, flags, dispParams, result, excepInfo, argErr);
 }
 
 void CHello::Hello() {
