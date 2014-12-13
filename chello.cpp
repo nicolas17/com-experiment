@@ -33,6 +33,38 @@ ULONG CHello::Release()
     return newRefCount;
 }
 
+HRESULT CHello::GetTypeInfoCount(UINT* infoCount) {
+    *infoCount = 1;
+    return S_OK;
+}
+HRESULT CHello::GetTypeInfo(UINT id, LCID lcid, ITypeInfo** typeInfo) {
+    if (id != 0) {
+        return DISP_E_BADINDEX;
+    }
+    return E_NOTIMPL;
+}
+HRESULT CHello::GetIDsOfNames(
+    REFIID riid,
+    LPOLESTR* names,
+    UINT nameCount,
+    LCID lcid,
+    DISPID* dispid
+) {
+    return E_NOTIMPL;
+}
+HRESULT CHello::Invoke(
+    DISPID member,
+    REFIID riid,
+    LCID lid,
+    WORD flags,
+    DISPPARAMS* dispParams,
+    VARIANT* result,
+    EXCEPINFO* excepInfo,
+    UINT* argErr
+) {
+    return E_NOTIMPL;
+}
+
 void CHello::Hello() {
     printf("Hello world\n");
 }

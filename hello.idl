@@ -1,6 +1,12 @@
 import "unknwn.idl";
 
 [local,uuid(DA193271-5E58-41AC-9ECE-0865757DFAD4), dual]
-interface IHello : IUnknown {
+interface IHello : IDispatch {
     void Hello();
+};
+
+[uuid(21DDB14E-8CDB-4B2B-AAC7-B2DA041F697F)]
+library Hello {
+    importlib("stdole2.tlb");
+    interface IHello;
 };

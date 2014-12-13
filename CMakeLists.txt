@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(comexperiment)
 
-add_custom_command(OUTPUT hello.h hello_i.c hello_p.c dlldata.c
+add_custom_command(OUTPUT hello.h hello_i.c hello_p.c dlldata.c hello.tlb
     COMMAND midl ${CMAKE_CURRENT_SOURCE_DIR}/hello.idl
     MAIN_DEPENDENCY hello.idl
 )

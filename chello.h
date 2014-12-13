@@ -13,10 +13,31 @@ public:
     ULONG STDMETHODCALLTYPE AddRef() override;
     ULONG STDMETHODCALLTYPE Release() override;
 
+    HRESULT STDMETHODCALLTYPE GetTypeInfoCount(UINT* infoCount) override;
+    HRESULT STDMETHODCALLTYPE GetTypeInfo(UINT id, LCID lcid, ITypeInfo** typeInfo) override;
+    HRESULT STDMETHODCALLTYPE GetIDsOfNames(
+        REFIID riid,
+        LPOLESTR* names,
+        UINT nameCount,
+        LCID lcid,
+        DISPID* dispid
+    ) override;
+    HRESULT STDMETHODCALLTYPE Invoke(
+        DISPID member,
+        REFIID riid,
+        LCID lid,
+        WORD flags,
+        DISPPARAMS* dispParams,
+        VARIANT* result,
+        EXCEPINFO* excepInfo,
+        UINT* argErr
+    ) override;
+
     void STDMETHODCALLTYPE Hello() override;
 
 private:
     ULONG m_refCount=0;
+    ITypeInfo* m_typeInfo = nullptr;
 };
 
 #endif
