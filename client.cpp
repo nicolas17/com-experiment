@@ -9,20 +9,20 @@
 
 int main()
 {
-	HRESULT hr;
+    HRESULT hr;
 
-	hr = CoInitialize(nullptr);
+    hr = CoInitialize(nullptr);
 
-	IHello* hello;
+    IHello* hello;
 
-	hr = CoCreateInstance(CLSID_Hello, nullptr, CLSCTX_INPROC_SERVER, IID_IHello, (void**)&hello);
-	if (FAILED(hr)) {
-		wprintf(L"CoCreateInstance failed: 0x%x\n", hr);
-		return 1;
-	}
+    hr = CoCreateInstance(CLSID_Hello, nullptr, CLSCTX_INPROC_SERVER, IID_IHello, (void**)&hello);
+    if (FAILED(hr)) {
+        wprintf(L"CoCreateInstance failed: 0x%x\n", hr);
+        return 1;
+    }
 
-	hello->Hello();
-	hello->Release();
+    hello->Hello();
+    hello->Release();
 
-	CoUninitialize();
+    CoUninitialize();
 }
