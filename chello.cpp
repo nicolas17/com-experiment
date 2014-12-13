@@ -9,6 +9,8 @@ HRESULT CHello::QueryInterface(REFIID iid, void **object)
     HRESULT ret = S_OK;
     if (IsEqualIID(iid, IID_IUnknown)) {
         *object = (IUnknown*) this;
+    } else if (IsEqualIID(iid, IID_IDispatch)) {
+        *object = (IDispatch*) this;
     } else if (IsEqualIID(iid, IID_IHello)) {
         *object = (IHello*) this;
     } else {
