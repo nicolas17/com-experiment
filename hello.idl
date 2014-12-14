@@ -5,7 +5,7 @@ interface IHello : IDispatch {
     void Hello();
 };
 
-[uuid(21DDB14E-8CDB-4B2B-AAC7-B2DA041F697F)]
+[uuid(21DDB14E-8CDB-4B2B-AAC7-B2DA041F697F), version(1.0)]
 library Hello {
     importlib("stdole2.tlb");
     interface IHello;
